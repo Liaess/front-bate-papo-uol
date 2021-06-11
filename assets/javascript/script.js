@@ -13,14 +13,14 @@ function perguntarNome() {
 
 function registrarParticipante() {
   const dados = { name: nome };
-  const requisicao = axios.post("http://localhost:4000/participants", dados);
-  requisicao.then(entrarNaSala).catch(perguntarNome);
+  const req = axios.post("http://localhost:4000/participants", dados);
+  req.then(()=>entrarNaSala());
+  req.catch((err)=>{alert(err.response.data);perguntarNome()});
 }
 
 function entrarNaSala() {
   carregarMensagens();
   carregarParticipantes();
-  
   agendarAtualizacaoDeMensagens();
   agendarAtualizacaoDeParticipantes();
   agendarAtualizacaoDeStatus();
@@ -109,7 +109,7 @@ function enviarMensagem() {
     }
   });
 
-  requisicao.catch(atualizarPagina);
+  requisicao.catch((err)=>{alert(err.response.data);atualizarPagina()});
 }
 
 function atualizarPagina() {
